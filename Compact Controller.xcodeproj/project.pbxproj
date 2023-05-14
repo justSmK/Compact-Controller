@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB4B065A2A10DE2100A02C97 /* CompactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4B06592A10DE2100A02C97 /* CompactViewController.swift */; };
 		BBF4C0C72A10D7CB00723E7A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4C0C62A10D7CB00723E7A /* AppDelegate.swift */; };
 		BBF4C0C92A10D7CB00723E7A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4C0C82A10D7CB00723E7A /* SceneDelegate.swift */; };
 		BBF4C0CB2A10D7CB00723E7A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4C0CA2A10D7CB00723E7A /* ViewController.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB4B06592A10DE2100A02C97 /* CompactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactViewController.swift; sourceTree = "<group>"; };
 		BBF4C0C32A10D7CB00723E7A /* Compact Controller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Compact Controller.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBF4C0C62A10D7CB00723E7A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBF4C0C82A10D7CB00723E7A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				BBF4C0CF2A10D7CC00723E7A /* Assets.xcassets */,
 				BBF4C0D12A10D7CC00723E7A /* LaunchScreen.storyboard */,
 				BBF4C0D42A10D7CC00723E7A /* Info.plist */,
+				BB4B06592A10DE2100A02C97 /* CompactViewController.swift */,
 			);
 			path = "Compact Controller";
 			sourceTree = "<group>";
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB4B065A2A10DE2100A02C97 /* CompactViewController.swift in Sources */,
 				BBF4C0CB2A10D7CB00723E7A /* ViewController.swift in Sources */,
 				BBF4C0C72A10D7CB00723E7A /* AppDelegate.swift in Sources */,
 				BBF4C0C92A10D7CB00723E7A /* SceneDelegate.swift in Sources */,
