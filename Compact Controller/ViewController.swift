@@ -9,59 +9,84 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private lazy var button: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Present", for: .normal)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
-        var configuration = UIButton.Configuration.borderless()
-        configuration.buttonSize = .medium
-        button.configuration = configuration
-        return button
-    }()
 
+    let button = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
-        setConstraints()
-    }
-
-    @objc private func buttonTapped() {
-        let vc = CompactViewController()
-        vc.modalPresentationStyle = .popover
-        vc.preferredContentSize = CGSize(width: 300, height: 280)
-        
-        guard let popoverPresentationController = vc.popoverPresentationController else {
-            return
-        }
-        
-        popoverPresentationController.permittedArrowDirections = .up
-        popoverPresentationController.sourceView = view
-        popoverPresentationController.sourceRect = button.frame
-        popoverPresentationController.delegate = self
-        
-        present(vc, animated: true)
-    }
-
-}
-
-extension ViewController {
-    private func setConstraints() {
+        button.setTitle("Present", for: .normal)
+        button.setTitleColor(.tintColor, for: .normal)
+        button.addAction(.init(handler: { _ in
+            let navigationController = PopoverNavigationController(
+                root: ChildController(),
+                size: .init(width: 300, height: 280),
+                sourceView: self.button,
+                sourceRect: self.button.bounds,
+                direction: .up
+            )
+            self.present(navigationController, animated: true)
+        }), for: .touchUpInside)
         view.addSubview(button)
         
-        let constraints: [NSLayoutConstraint] = [
-            button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ]
+    }
+
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
-        NSLayoutConstraint.activate(constraints)
+        button.sizeToFit()
+        button.center.x = view.frame.width / 2
+        button.frame.origin.y = view.layoutMargins.top + 24
     }
 }
 
-extension ViewController: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+class ChildController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let segment = UISegmentedControl(items: ["280pt", "150pt"])
+        segment.addAction(.init(handler: { _ in
+            self.navigationController?.preferredContentSize = .init(width: 300, height: segment.selectedSegmentIndex == 0 ? 280 : 150)
+        }), for: .valueChanged)
+        
+        segment.selectedSegmentIndex = .zero
+        navigationItem.titleView = segment
+        
+        navigationItem.rightBarButtonItem = .init(UIBarButtonItem(systemItem: .close, primaryAction: .init(handler: { _ in
+            self.dismiss(animated: true)
+        })))
+        
+        view.backgroundColor = .secondarySystemBackground
+    }
+}
+
+
+class PopoverNavigationController: UINavigationController, UIPopoverPresentationControllerDelegate {
+    
+    init(root: UIViewController, size: CGSize, sourceView: UIView, sourceRect: CGRect, direction: UIPopoverArrowDirection) {
+        super.init(rootViewController: root)
+        
+        modalPresentationStyle = .popover
+        preferredContentSize = size
+        
+        popoverPresentationController?.permittedArrowDirections = [direction]
+        popoverPresentationController?.sourceView = sourceView
+        popoverPresentationController?.sourceRect = sourceRect
+        
+        popoverPresentationController?.delegate = self
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .secondarySystemBackground
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
 }
